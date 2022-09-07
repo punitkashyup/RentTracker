@@ -1,27 +1,31 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, TextInput } from 'react-native'
 import React, {useState} from 'react'
 import CustomInput from '../../components/CustomInput/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
+import {useForm, Controller} from 'react-hook-form';
 
 const SignInScreen = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  
+  const {control, handleSubmit} = useForm ();
 
   const navigation = useNavigation();
 
-  const onLogInPress = () => {
+  const onLogInPress = (data) => {
+    console.log(data);
     console.warn("Log in");
     // Validate User
 
     navigation.navigate('Home');
   }
-  const onSignUpPress = () => {
+  const onSignUpPress = (data) => {
+    console.log(data);
     console.warn("Sign Up");
     // Register  User
     navigation.navigate('SignUp');
   }
-  const onForgotPasswordPress = () => {
+  const onForgotPasswordPress = (data) => {
+    console.log(data);
     console.warn("Forgot Password");
     // Register  User
     navigation.navigate('ForgotPasssword');
@@ -34,21 +38,21 @@ const SignInScreen = () => {
       <Text style={style.logo}>₹entTracker</Text>
 
       <CustomInput 
-      placeholder="Username" 
-      value={username} 
-      setValue={setUsername} 
+        name = "username"
+        placeholder="Username" 
+        control={control}
       />
       <CustomInput 
-      placeholder="Password" 
-      value={password} 
-      setValue={setPassword} 
-      secureTextEntry={true}
+        name = "password"
+        placeholder="Password"
+        control={control}
+        secureTextEntry={true}
       />
 
-      <CustomButton text="Log In" onPress={onLogInPress}/>
-      <CustomButton text="Sign Up" onPress={onSignUpPress}/>
+      <CustomButton text="Log In" onPress={handleSubmit(onLogInPress)} />
+      <CustomButton text="Sign Up" onPress={handleSubmit(onSignUpPress)}/>
 
-      <CustomButton text="Forgot password?" onPress={onForgotPasswordPress} type="TERTIARY"/>
+      <CustomButton text="Forgot password?" onPress={handleSubmit(onForgotPasswordPress)} type="TERTIARY"/>
 
     </View>
   );

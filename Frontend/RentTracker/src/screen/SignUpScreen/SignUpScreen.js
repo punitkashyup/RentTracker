@@ -3,20 +3,20 @@ import React, {useState} from 'react'
 import CustomInput from '../../components/CustomInput/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
+import {useForm, Controller} from 'react-hook-form';
 
 const SignUpScreen = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordRepeat, setPasswordRepeat] = useState('');
+  const {control, handleSubmit} = useForm ();
 
   const navigation = useNavigation();
 
-  const onLogInPress = () => {
+  const onLogInPress = (data) => {
+    console.log(data);
     console.warn("Log in");
     navigation.navigate('SignIn');
   }
-  const onSubmitPress = () => {
+  const onSubmitPress = (data) => {
+    console.log(data);
     console.warn("Submit Sucessfully");
   }
 
@@ -26,33 +26,33 @@ const SignUpScreen = () => {
       <Text style={style.logo}>₹entTracker</Text>
 
       <CustomInput 
-      placeholder="Name" 
-      value={name} 
-      setValue={setName} 
+      name = "name"
+      placeholder="Name"
+      control={control}
       />
 
       <CustomInput 
-      placeholder="Email" 
-      value={email} 
-      setValue={setEmail} 
+      name = "email"
+      placeholder="Email"
+      control={control}
       />
 
-      <CustomInput 
-      placeholder="Password" 
-      value={password} 
-      setValue={setPassword} 
+      <CustomInput
+      name = "password" 
+      placeholder="Password"
+      control={control} 
       secureTextEntry={true}
       />
 
       <CustomInput 
-      placeholder="Confirm Password" 
-      value={passwordRepeat} 
-      setValue={setPasswordRepeat}
+      name = "repetPassword"
+      placeholder="Confirm Password"
+      control={control}
       secureTextEntry={true}
       />
 
-      <CustomButton text="Submit" onPress={onSubmitPress}/>
-      <CustomButton text="Log In" onPress={onLogInPress}/>
+      <CustomButton text="Submit" onPress={handleSubmit(onSubmitPress)}/>
+      <CustomButton text="Log In" onPress={handleSubmit(onLogInPress)}/>
       
 
     </View>
