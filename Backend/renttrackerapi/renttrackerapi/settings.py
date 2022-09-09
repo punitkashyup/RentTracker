@@ -174,3 +174,11 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
 EMAIL_USE_TLS = True
 
 PASSWORD_RESET_TIMEOUT=900       # 900 Sec = 15 Min
+
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'static/image')
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+# STATIC_ROOT = os.path.join(BASE_DIR,"static")
+STATIC_URL = "/static/"
+MEDIA_ROOT = os.path.join(BASE_DIR,'static/image')
+MEDIA_URL = "/image/"

@@ -40,7 +40,17 @@ class UserLoginSerializer(serializers.ModelSerializer):
 class UserProfileSerializer(serializers.ModelSerializer):
   class Meta:
     model = User
-    fields = ['id', 'email', 'name']
+    fields = ['id', 'email', 'name','avatar']
+
+class UserAvatarSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["avatar"]
+
+    def save(self, *args, **kwargs):
+        if self.instance.avatar:
+            self.instance.avatar.delete()
+        return super().save(*args, **kwargs)
 
 class UserChangePasswordSerializer(serializers.Serializer):
   password = serializers.CharField(max_length=255, style={'input_type':'password'}, write_only=True)
@@ -118,9 +128,9 @@ class rentSerializer(serializers.ModelSerializer):
     rentmonth = serializers.CharField()
     rent_amount = serializers.FloatField()
     bijli_bill = serializers.FloatField()
-    other_amount = serializers.FloatField()
-    other_commnet = serializers.CharField(max_length=200)
-    total_amount = serializers.FloatField()
+    other_amount = serializers.FloatField(default=0.00,)
+    other_commnet = serializers.CharField(allow_blank=True,allow_null=True)
+    total_amount = serializers.FloatField(read_only=True)
     
     class Meta:
         model = rent
@@ -145,9 +155,9 @@ class countSerializer(serializers.ModelSerializer):
         fields = ('count_rent_month','total_rent_amount')
 
     def get_total_rent_amount(self, obj):
-        totalprice = rent.objects.all().aggregate(total_price=Sum('rent_amount'))
-        return totalprice["total_price"]
+        totalprice = rent.objects.all().aggregate(total_month=Sum('rent_amount'))
+        return totalprice["total_month"]
 
     def get_count_rent_month(self, obj):
-        totalmonth = rent.objects.all().aggregate(total_month=Count('rentmonth'))
-        return totalmonth["total_month"]
+        totalmonth = rent.objects.all().aggregate(total_price=Count('rentmonth'))
+        return totalmonth["total_price"]

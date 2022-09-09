@@ -1,6 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager,AbstractBaseUser
 
+import os
+import sys
+from django.db import models
+from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
+
+
 #  Custom User Manager
 class UserManager(BaseUserManager):
   def create_user(self, email, name, password=None, password2=None):
@@ -33,6 +40,13 @@ class UserManager(BaseUserManager):
       return user
 
 #  Custom User Model
+
+def upload_to(instance, filename):
+    now = timezone.now()
+    base, extension = os.path.splitext(filename.lower())
+    milliseconds = now.microsecond // 1000
+    return f"users/{instance.pk}/{now:%Y%m%d%H%M%S}{milliseconds}{extension}"
+
 class User(AbstractBaseUser):
   email = models.EmailField(
       verbose_name='Email',
@@ -44,6 +58,7 @@ class User(AbstractBaseUser):
   is_admin = models.BooleanField(default=False)
   created_at = models.DateTimeField(auto_now_add=True)
   updated_at = models.DateTimeField(auto_now=True)
+  avatar = models.ImageField(_("Avatar"), upload_to=upload_to, blank=True)
 
   objects = UserManager()
 
