@@ -145,9 +145,9 @@ class countSerializer(serializers.ModelSerializer):
         fields = ('count_rent_month','total_rent_amount')
 
     def get_total_rent_amount(self, obj):
-        totalprice = rent.objects.all().aggregate(total_month=Sum('rent_amount'))
-        return totalprice["total_month"]
+        totalprice = rent.objects.all().aggregate(total_price=Sum('rent_amount'))
+        return totalprice["total_price"]
 
     def get_count_rent_month(self, obj):
-        totalmonth = rent.objects.all().aggregate(total_price=Count('rentmonth'))
-        return totalmonth["total_price"]
+        totalmonth = rent.objects.all().aggregate(total_month=Count('rentmonth'))
+        return totalmonth["total_month"]
