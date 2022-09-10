@@ -1,9 +1,11 @@
 import { View, Text, StyleSheet } from 'react-native'
-import React, {useState} from 'react'
+import React from 'react'
 import CustomInput from '../../components/CustomInput/CustomInput';
 import CustomButton from '../../components/CustomButton';
+import IconButton from '../../components/IconButton/IconButton';
 import { useNavigation } from '@react-navigation/native';
 import {useForm, Controller} from 'react-hook-form';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 
 const HomeScreen = () => {
 
@@ -20,12 +22,26 @@ const HomeScreen = () => {
     console.log();
     console.warn("View Report");
   }
+  const onProfileIconPress = () => {
+    console.log();
+    console.warn("Profile Pressed");
+    // navigation.navigate('');
+  }
+  const onSignoutIconPress = () => {
+    console.log();
+    console.warn("Signout Pressed");
+    // navigation.navigate('');
+  }
 
   return (
     <View style={style.root}>
-
-      <Text style={style.logo}>₹entTracker</Text>
       
+       <View style={style.navbar}>
+          <IconButton name= "user-alt" onPress={onProfileIconPress}/>
+          <Text style={style.logo}>₹entTracker</Text>
+          <IconButton name= "calendar-alt" onPress={onSignoutIconPress}/>
+        </View>
+
       <View style={style.dashboard}>
         <View>
             <Text style={style.statusText1}>Years</Text>
@@ -82,8 +98,10 @@ const style = StyleSheet.create({
     padding: 20,
   },
   logo: {
-    marginTop: 0,
-    marginBottom: 10,
+    marginTop: -8,
+    marginBottom: 15,
+    marginLeft: 40,
+    marginRight: 40,
     fontFamily: 'Inter',
     fontWeight: 'bold',
     fontSize: 40,
@@ -101,6 +119,7 @@ const style = StyleSheet.create({
     // alignItems: 'center',
     justifyContent: 'center',
     marginTop: 10,
+    marginBottom: 8,
     zIndex: 10,
     backgroundColor: '#F6F6F6',
     borderRadius: 8,
@@ -136,6 +155,10 @@ const style = StyleSheet.create({
     fontFamily: 'Inter',
     fontWeight: 'bold',
   },
+  navbar:{
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+  }
   
 });
 
