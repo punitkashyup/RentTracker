@@ -16,7 +16,7 @@ const SignInScreen = () => {
     console.warn("Log in");
     // Validate User
 
-    navigation.navigate('Home');
+    // navigation.navigate('Home');
   }
   const onSignUpPress = (data) => {
     console.log(data);

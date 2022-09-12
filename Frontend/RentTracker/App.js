@@ -9,14 +9,14 @@
 import React from 'react';
 import {SafeAreaView, StyleSheet,Text} from 'react-native';
 
-import Navigation from './src/navigation';
+import AuthStack from './src/navigation/AuthStack';
 
 
 
 const App = () => {
   return (
     <SafeAreaView style={styles.root}>
-      <Navigation />
+      <AuthStack />
     </SafeAreaView>
   );
 };
